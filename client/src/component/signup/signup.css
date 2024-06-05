@@ -90,4 +90,28 @@ label > input:focus + span {
     color: #394867;
     text-decoration: none;
 }
+.signup{
+    margin: 10px auto;
+    padding: 40px 50px;
+    max-width: 480px;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 1px 1px 1px #666;
+}
+
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .password-input-wrapper input {
+    flex: 1;
+  }
+  
+  .password-toggle-icon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+  }
   
