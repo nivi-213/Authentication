@@ -1,27 +1,36 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import axios
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .post("http://localhost:4000/login", { email, password })
       .then((result) => {
         console.log(result);
-
         if (result.data === "Success") {
+          toast.success("Login successful!");
           navigate("/home");
+        } else {
+          toast.error("Login failed. Please check your credentials.");
         }
       })
       .catch((err) => {
-        console.error("Error registering:", err);
+        console.error("Error logging in:", err);
+        toast.error("Error logging in. Please try again.");
       });
   };
 
   return (
     <div>
+      <ToastContainer />
       <form className="login" onSubmit={handleSubmit}>
         <h2 className="text-center">Welcome, User!</h2>
         <p className="text-center">Please log in</p>

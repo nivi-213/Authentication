@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import Spinner from "react-bootstrap/Spinner";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -15,6 +16,8 @@ function Signup() {
   const [passwordError, setPasswordError] = useState("");
   const [error, setError] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const validateEmail = (email) => {
@@ -34,41 +37,54 @@ function Signup() {
     setEmailError("");
     setPasswordError("");
     setError(""); // Clear previous errors
+    setIsLoading(true);
+
+    let isValid = true;
 
     if (!name) {
       setNameError("Name is required.");
+      isValid = false;
     }
 
     if (!email) {
       setEmailError("Email is required.");
+      isValid = false;
     } else if (!validateEmail(email)) {
       setEmailError("Invalid email format.");
+      isValid = false;
     }
 
     if (!password) {
       setPasswordError("Password is required.");
+      isValid = false;
     } else if (!validatePassword(password)) {
       setPasswordError(
         "Password must be at least 8 characters long and contain at least one letter and one number."
       );
+      isValid = false;
     }
 
-    if (name && email && password) {
-      axios
-        .post("http://localhost:4000/register", { name, email, password })
-        .then((result) => {
-          console.log(result);
-          navigate("/login");
-        })
-        .catch((err) => {
-          setError("An error occurred. Please try again.");
-          console.log(err);
-        });
+    if (!isValid) {
+      setIsLoading(false);
+      return;
     }
+
+    axios
+      .post("http://localhost:4000/register", { name, email, password })
+      .then((result) => {
+        console.log(result);
+        setIsLoading(false);
+        navigate("/login");
+      })
+      .catch((err) => {
+        setError("An error occurred. Please try again.");
+        console.log(err);
+        setIsLoading(false);
+      });
   };
 
   return (
-    <div className="">
+    <div className="signup-container">
       <form onSubmit={handleSubmit}>
         <h1>SIGN UP</h1>
 
@@ -83,7 +99,9 @@ function Signup() {
             onChange={(e) => setName(e.target.value)}
           />
           <span>NAME</span>
-          {nameError && <div className="input-error  text-danger mb-2">{nameError}</div>}
+          {nameError && (
+            <div className="input-error text-danger mb-2">{nameError}</div>
+          )}
         </label>
 
         <label htmlFor="email">
@@ -95,7 +113,9 @@ function Signup() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <span>EMAIL</span>
-          {emailError && <div className="input-error  text-danger mb-2">{emailError}</div>}
+          {emailError && (
+            <div className="input-error text-danger mb-2">{emailError}</div>
+          )}
         </label>
 
         <label htmlFor="password">
@@ -109,20 +129,27 @@ function Signup() {
             />
             <span>PASSWORD</span>
             <FontAwesomeIcon
-              icon={passwordVisible ?faEye  : faEyeSlash}
+              icon={passwordVisible ? faEye : faEyeSlash}
               className="password-toggle-icon"
               onClick={() => setPasswordVisible(!passwordVisible)}
             />
           </div>
-          {passwordError && <div className="input-error text-danger mb-2">{passwordError}</div>}
+          {passwordError && (
+            <div className="input-error text-danger mb-2">{passwordError}</div>
+          )}
         </label>
 
-        <button
-          type="submit"
-          className="btn btn-primary border w-100 bg-primary"
-        >
-          Register
-        </button>
+        <div className="text-end mt-4">
+          {isLoading ? (
+            <Spinner animation="border" role="status">
+              <span className="sr-only"></span>
+            </Spinner>
+          ) : (
+            <button className="btn btn-primary border w-100" type="submit">
+              Register
+            </button>
+          )}
+        </div>
       </form>
       <p className="text-center">Already Have an Account?</p>
       <Link to="/login" className="btn btn-default border w-100 bg-light">
