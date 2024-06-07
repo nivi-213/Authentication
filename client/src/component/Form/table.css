@@ -1,0 +1,100 @@
+
+  /* Uploaded section styling */
+  .uploaded {
+    margin-top: 10px;
+    font-size: 20px;
+  }
+  .uploadpdfs{
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+  }
+  .uploaded h4 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #343a40;
+  }
+  
+  /* Table styling */
+  .table-responsive {
+    overflow-x: auto;
+  }
+  
+  .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+  }
+  
+  .table th,
+  .table td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+   
+  }
+  
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    background-color: #e9ecef;
+    font-size: 15px;
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Button styling */
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
+  
+  .btn-primary.mr-2 {
+    margin-right: 0.5rem;
+  }
+  
+  .btn-danger.ms-3 {
+    margin-left: 0.5rem;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    .btn {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .btn-primary.mr-2,
+    .btn-danger.ms-3 {
+      margin-right: 0;
+      margin-left: 0;
+    }
+  }
+  

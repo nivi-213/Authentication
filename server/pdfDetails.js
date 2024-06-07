@@ -9,6 +9,7 @@ const PdfDetailsSchema = new mongoose.Schema({
     type: String,
     required: true
   }
+  
 });
 
 mongoose.model('PdfDetails', PdfDetailsSchema);

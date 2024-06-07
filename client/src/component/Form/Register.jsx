@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -24,7 +26,6 @@ function Register() {
       setIsUpdate(false);
     }
   }, [location]);
-
   const submitImage = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -32,14 +33,14 @@ function Register() {
     if (file) {
       formData.append("file", file);
     }
-
+  
     try {
       let result;
       if (isUpdate) {
         if (!pdfId) {
           throw new Error("PDF ID is missing or invalid.");
         }
-
+  
         result = await axios.put(
           `http://localhost:5000/update-file/${pdfId}`,
           formData,
@@ -48,33 +49,23 @@ function Register() {
           }
         );
       } else {
-        result = await axios.post(
-          "http://localhost:5000/upload-files",
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        );
+        result = await axios.post("http://localhost:5000/upload-files", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
       }
-
+  
       if (result.data.status === "ok") {
-        alert(
-          isUpdate ? "Updated Successfully!!!" : "Uploaded Successfully!!!"
-        );
+        alert(isUpdate ? "Updated Successfully!!!" : "Uploaded Successfully!!!");
         navigate("/table");
       } else {
         throw new Error("Unexpected response from server.");
       }
     } catch (error) {
-      console.error(
-        `Error ${isUpdate ? "updating" : "uploading"} file:`,
-        error
-      );
-      alert(
-        `Error ${isUpdate ? "updating" : "uploading"} file: ${error.message}`
-      );
+      console.error(`Error ${isUpdate ? "updating" : "uploading"} file:`, error);
+      alert(`Error ${isUpdate ? "updating" : "uploading"} file: ${error.message}`);
     }
   };
+  
 
   return (
     <div className="App container mt-5">
@@ -84,22 +75,22 @@ function Register() {
             {isUpdate ? "Update PDF in React" : "Upload PDF in React"}
           </h1>
           <div className="row justify-content-center">
-            <div >
-              {/* <label >Title</label> */}
+            <div className="form-group">
+              <label htmlFor="">Title</label>
               <input
                 type="text"
-                className=" w-100"
+                className="form-control w-100"
                 placeholder="Title"
                 value={title}
                 required
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
-            <div >
-              {/* <label >Browse</label> */}
+            <div className="form-group">
+              <label className="" htmlFor="">Browse</label>
               <input
                 type="file"
-                className=""
+                className="form-control"
                 accept="application/pdf"
                 onChange={(e) => setFile(e.target.files[0])}
               />

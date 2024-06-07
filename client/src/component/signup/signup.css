@@ -45,7 +45,7 @@ form input:focus {
 
 form label {
     position: relative;
-    height: 100%;
+    /* height: 100%; */
     display: block;
 }
 
